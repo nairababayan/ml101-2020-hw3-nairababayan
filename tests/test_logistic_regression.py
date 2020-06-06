@@ -24,7 +24,7 @@ class LogisticRegressionTest(TestCase):
         model = LogisticRegression(2)
         model.w = np.random.random(2) * 2 - 1
         random_data = np.random.random((3, 2)) * 2 - 1
-        random_labels = np.random.randint(0, 2, 2)
+        random_labels = np.random.randint(0, 2, 3)
         self.assertTrue(model.loss(random_data, random_labels) >= -1e-8)
         self.assertTrue(model.loss(random_data, 1 - random_labels) >= -1e-8)
     
@@ -32,11 +32,11 @@ class LogisticRegressionTest(TestCase):
         np.random.seed(0)
         model = LogisticRegression(2)
         model.w = np.zeros(2)
-        self.assertListEqual(list(model.gradloss(np.random.random((2, 2)),
+        self.assertListEqual(list(model.gradloss(np.zeros((2, 2)),
                                                  np.zeros(2))),
                              list(np.zeros(2)))
-        self.assertListEqual(list(model.gradloss(np.random.random((2, 2)),
-                                                 np.zeros(2))),
+        self.assertListEqual(list(model.gradloss(np.zeros((2, 2)),
+                                                 np.ones(2))),
                              list(np.zeros(2)))
         model.w = np.ones(2)
         self.assertFalse(list(model.gradloss(np.random.random((100, 2)),
@@ -47,7 +47,7 @@ class LogisticRegressionTest(TestCase):
         model = LogisticRegression(2)
         model.w = np.zeros(2)
         self.assertListEqual(
-            model.calculate_probabilities(np.random.random((100, 2))),
+            list(model.calculate_probabilities(np.random.random((100, 2)))),
             list(np.ones(100) * 0.5)
         )
 
