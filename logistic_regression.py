@@ -95,7 +95,7 @@ class LogisticRegression:
         ...        == model.calculate_probabilities(np.array([[0, 1]])))
         True
         """
-        return sigmoid(data.dot(self.w.T))
+        return self.sigmoid(data.dot(self.w.T))
 
     def predict(self, data):
         """Calculate labels for each datapoint of the given data
