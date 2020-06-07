@@ -13,9 +13,12 @@ def stochastic_gradient_descent(data, labels, gradloss,
     :param learning_rate: gradient scaling parameter
     :yield: yields scaled gradient
     """
-    # FIXME: yield gradient for each datapoint
-    yield np.zeros(data.shape[1])
-    yield np.arange(data.shape[1])
+    shuffler = np.random.permutation(len(labels))
+    data = data[shuffler]
+    labels = labels[shuffler]
+    
+    for i in range(len(labels)):        
+        yield learning_rate * gradloss(data[i], [labels[i]])
 
 def minibatch_gradient_descent(data, labels, gradloss,
                                batch_size=10, learning_rate=1):
@@ -30,12 +33,18 @@ def minibatch_gradient_descent(data, labels, gradloss,
     :param learning_rate: gradient scaling parameter
     :yield: yields scaled gradient
     """
-    # TODO: You need to split the data into batches of batch_size
-    # If there is a remaining part with less length than batch_size
-    # Then use that as a batch
-    # FIXME: yield gradient for each batch of datapoints
-    yield np.zeros(data.shape[1])
-    yield np.ones(data.shape[1])
+    N = len(labels)    
+    shuffler = np.random.permutation(N)    
+    data = data[shuffler]
+    labels = labels[shuffler]
+    
+    i_s = 0
+    while i_s < N:
+        i_e = i_s + batch_size
+        if i_e > N:
+            i_e = N        
+        yield learning_rate * gradloss(data[i_s:i_e], labels[i_s:i_e])        
+        i_s = i_e
 
 def batch_gradient_descent(data, labels, gradloss,
                            learning_rate=1):
@@ -49,8 +58,7 @@ def batch_gradient_descent(data, labels, gradloss,
     :param learning_rate: gradient scaling parameter
     :yield: yields scaled gradient
     """
-    # FIXME: yield the gradient of right scale
-    yield np.ones(data.shape[1])
+    yield learning_rate * gradloss(data, labels)
 
 def newton_raphson_method(data, labels, gradloss, hessianloss):
     """Calculate updates using Newton-Raphson update formula
