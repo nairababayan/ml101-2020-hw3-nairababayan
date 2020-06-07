@@ -15,8 +15,7 @@ class Perceptron:
 
     @staticmethod
     def _generate_initial_weights(dims):
-        # FIXME: Fill with random initial values
-        return np.ones(dims)
+        return np.random.randn(dims)
 
     def fit(self, data, labels):
         """Fit the model and fix weight vector
@@ -56,7 +55,8 @@ class Perceptron:
         >>> model._loss(np.array([0]), -1) # the boundary
         0
         """
-        raise NotImplementedError()
+        y = label * self.w.T.dot(vec)
+        return 0 if y >= 0 else -y
     
     def loss(self, data, labels):
         return sum(self._loss(vec, label)
@@ -71,7 +71,7 @@ class Perceptron:
         >>> model._gradloss(np.array([2, 1]), -1)
         array([-2, -1])
         """
-        raise NotImplementedError()
+        return np.zeros(len(vec)) if label * self.w.T.dot(vec) >= 0 else label * vec
     
     def gradloss(self, data, labels):
         return sum(self._gradloss(vec, label)
@@ -88,4 +88,7 @@ class Perceptron:
         >>> model.predict(np.array([[2, 1], [1, 0], [0, -1]]))
         array([1, 1, -1])
         """
-        raise NotImplementedError()
+        labels = []
+        for row in data:
+            labels.append(1 if self.w.dot(row) >= 0 else -1)
+        return np.array(labels)
