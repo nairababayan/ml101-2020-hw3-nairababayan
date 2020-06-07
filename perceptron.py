@@ -71,7 +71,7 @@ class Perceptron:
         >>> model._gradloss(np.array([2, 1]), -1)
         array([-2, -1])
         """
-        return np.zeros(len(vec)).astype(int) if label * self.w.T.dot(vec) >= 0 else label * vec # or -label * vec ?? :/
+        return np.zeros(len(vec)).astype(int) if label * self.w.T.dot(vec) >= 0 else -label * vec
     
     def gradloss(self, data, labels):
         return sum(self._gradloss(vec, label)
