@@ -18,7 +18,7 @@ def stochastic_gradient_descent(data, labels, gradloss,
     labels = labels[shuffler]
     
     for i in range(len(labels)):        
-        yield learning_rate * gradloss(data[i], [labels[i]])
+        yield learning_rate * gradloss(data[i:i+1], labels[i:i+1])
 
 def minibatch_gradient_descent(data, labels, gradloss,
                                batch_size=10, learning_rate=1):
