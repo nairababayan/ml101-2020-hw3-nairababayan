@@ -28,7 +28,8 @@ class LogisticRegression:
 
     @staticmethod
     def _generate_initial_weights(dims):        
-        return np.random.randn(dims)
+        #return np.random.randn(dims)
+        return np.zeros(dims)
     
     @staticmethod
     def sigmoid(x):
