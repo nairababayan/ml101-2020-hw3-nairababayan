@@ -29,7 +29,7 @@ class Perceptron:
             print(f"epoch N{num_epoch}:", end='\r', flush=True)
             # FIXME: Won't work correctly for windows, sorry :/
             for dw in stochastic_gradient_descent(
-                    data, labels, self._gradloss):
+                    data, labels, self.gradloss):
                 self.w -= dw
                 yield self.w
 
